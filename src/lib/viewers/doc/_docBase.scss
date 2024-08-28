@@ -242,6 +242,23 @@ $thumbnail-sidebar-width: 191px; // Extra pixel to account for sidebar border
         overflow: auto;
     }
 
+    .bp-quick-actions-container {
+        align-content: center;
+        width: 90%;
+        max-width: 800px;
+        height: 50px;
+        margin: 10px auto 0 auto;
+        padding-left: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 8px 0 #0000000d;
+
+        .bp-quick-action {
+            display: inline-block;
+            margin-left: 12px;
+        }
+    }
+
     .pdfViewer.pinching {
         visibility: hidden;
     }

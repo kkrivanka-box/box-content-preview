@@ -533,6 +533,11 @@ class DocBaseViewer extends BaseViewer {
         if (this.thumbnailsSidebar) {
             this.thumbnailsSidebar.setCurrentPage(parsedPageNumber);
         }
+
+        if (parsedPageNumber === 1) {
+            console.log(`setPage ${parsedPageNumber}`);
+            this.docEl.scroll({ top: 0 });
+        }
     }
 
     /**
@@ -1264,6 +1269,31 @@ class DocBaseViewer extends BaseViewer {
     pagerenderedHandler({ pageNumber }) {
         if (!pageNumber) {
             return;
+        }
+
+        if (!this.quickActions) {
+            console.log('appending quick actions');
+            this.quickActions = document.createElement('div');
+
+            const divHTML = `
+            <div>
+                <h3 style="display: inline-block">Box AI</h3>
+                <button class="bp-quick-action">Summarize</button>
+                <button class="bp-quick-action">Key takeaways</button>
+                <button class="bp-quick-action">Ask anything...</button>
+                <button class="bp-quick-action" id="bp-quick-actions-dismiss" style="float: right; margin-right: 20px;">Dismiss</button>
+            </div>`;
+            this.quickActions.innerHTML = divHTML;
+            this.quickActions.classList.add('bp-quick-actions-container');
+
+            this.docEl.insertBefore(this.quickActions, this.viewerEl);
+            console.log(`inserted ${this.docEl.scrollTop}`);
+
+            setTimeout(() => {
+                document.getElementById('bp-quick-actions-dismiss').addEventListener('click', () => {
+                    this.quickActions.style.display = 'none';
+                });
+            }, 100);
         }
 
         this.renderUI();
